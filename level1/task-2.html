@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cognifyz Level 1 – Task 2</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        #colorBtn {
+            background-color: steelblue;
+            color: white;
+        }
+
+        /* Calculator Styling */
+        .calc-box {
+            margin-top: 30px;
+            padding: 15px;
+            width: 250px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+
+        input {
+            padding: 8px;
+            margin: 5px 0;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #aaa;
+        }
+
+        #calcBtn {
+            margin-top: 10px;
+            background: black;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Cognifyz Level 1 - Task 2 (JavaScript)</h1>
+
+    <!-- TASK 1: Button color change -->
+    <h2>1. Button that changes color when clicked</h2>
+    <button id="colorBtn" onclick="changeColor()">Click Me</button>
+
+    <script>
+        function changeColor() {
+            const btn = document.getElementById("colorBtn");
+
+            // Random color generator
+            const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+
+            btn.style.backgroundColor = randomColor;
+        }
+    </script>
+
+    <!-- TASK 2: Greeting alert based on current time -->
+    <h2>2. Greeting alert based on current time</h2>
+    <button onclick="showGreeting()">Show Greeting</button>
+
+    <script>
+        function showGreeting() {
+            const hour = new Date().getHours();
+            let message = "";
+
+            if (hour < 12) {
+                message = "Good Morning!";
+            } 
+            else if (hour < 17) {
+                message = "Good Afternoon!";
+            } 
+            else {
+                message = "Good Evening!";
+            }
+
+            alert(message);
+        }
+    </script>
+
+    <!-- TASK 3: Simple calculator (Addition) -->
+    <h2>3. Basic Calculator (Add Two Numbers)</h2>
+
+    <div class="calc-box">
+        <input type="number" id="num1" placeholder="Enter first number">
+        <input type="number" id="num2" placeholder="Enter second number">
+        <button id="calcBtn" onclick="addNumbers()">Add</button>
+
+        <p><strong>Result: </strong><span id="result">0</span></p>
+    </div>
+
+    <script>
+        function addNumbers() {
+            let a = parseFloat(document.getElementById("num1").value);
+            let b = parseFloat(document.getElementById("num2").value);
+
+            let sum = a + b;
+
+            document.getElementById("result").innerText = isNaN(sum) ? "Invalid input" : sum;
+        }
+    </script>
+
+</body>
+</html>

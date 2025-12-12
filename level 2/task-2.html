@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cognifyz Level 2 - Task 2 (Responsive Design)</title>
+
+  <style>
+    /* ---------------------------
+       Base / Reset-ish
+       --------------------------- */
+    :root{
+      --accent: #0b76ef;
+      --muted: #6b7280;
+      --bg: #f7fafc;
+      --card-bg: #ffffff;
+      --radius: 10px;
+      --max-width: 1080px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%; margin:0; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
+    body{background:var(--bg); color:#111; line-height:1.45; display:flex; justify-content:center; padding:24px;}
+
+    /* ---------- Layout container ---------- */
+    .page {
+      width:100%;
+      max-width:var(--max-width);
+      background:transparent;
+    }
+
+    /* ---------- Header + Navigation ---------- */
+    header.site-header {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:18px;
+    }
+
+    .brand {
+      display:flex;
+      align-items:center;
+      gap:10px;
+      text-decoration:none;
+      color:inherit;
+    }
+    .brand .logo {
+      width:44px; height:44px; background:var(--accent); border-radius:8px;
+      display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700;
+      box-shadow: 0 6px 18px rgba(11,118,239,0.12);
+    }
+    .brand .title { font-size:18px; font-weight:600; }
+
+    /* ----- Navigation (desktop) ----- */
+    nav.main-nav {
+      display:flex;
+      align-items:center;
+      gap:18px;
+    }
+    nav.main-nav a {
+      text-decoration:none;
+      color: #111;
+      padding:8px 12px;
+      border-radius:6px;
+      font-weight:500;
+    }
+    nav.main-nav a:hover { background:rgba(11,118,239,0.06); color:var(--accent); }
+
+    /* ----- Hamburger (mobile) via checkbox hack ----- */
+    /* hide the checkbox visually but keep accessible */
+    .nav-toggle { position: absolute; left: -9999px; }
+    .hamburger {
+      display:none;
+      width:44px; height:44px; border-radius:8px; border:1px solid rgba(0,0,0,0.06);
+      background:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer;
+    }
+    .hamburger .bars {
+      width:20px; height:2px; background:#111; position:relative;
+      transition: all .22s ease;
+    }
+    .hamburger .bars::before, .hamburger .bars::after{
+      content:""; position:absolute; left:0; width:100%; height:2px; background:#111;
+      transition: all .22s ease;
+    }
+    .hamburger .bars::before{ top:-6px }
+    .hamburger .bars::after{ top:6px }
+
+    /* When nav-toggle checked -> transform bars to X */
+    .nav-toggle:checked + .hamburger .bars {
+      background: transparent;
+    }
+    .nav-toggle:checked + .hamburger .bars::before {
+      transform: rotate(45deg) translate(4px, 4px);
+    }
+    .nav-toggle:checked + .hamburger .bars::after {
+      transform: rotate(-45deg) translate(4px, -4px);
+    }
+
+    /* Mobile nav panel (hidden by default on desktop) */
+    .mobile-nav {
+      display:none;
+      margin-top:12px;
+      background:var(--card-bg);
+      border-radius:10px;
+      box-shadow:0 8px 20px rgba(16,24,40,0.06);
+      padding:12px;
+    }
+    .mobile-nav a {
+      display:block; padding:10px 12px; border-radius:8px; text-decoration:none; color:#111; font-weight:500;
+    }
+    .mobile-nav a:not(:last-child){ margin-bottom:6px }
+    .mobile-nav a:hover{ background:rgba(11,118,239,0.04); color:var(--accent) }
+
+    /* ---------- Main content ---------- */
+    main {
+      display:grid;
+      grid-template-columns: 1fr 320px;
+      gap:20px;
+      align-items:start;
+    }
+
+    .card {
+      background:var(--card-bg);
+      border-radius:var(--radius);
+      padding:18px;
+      box-shadow: 0 8px 20px rgba(16,24,40,0.04);
+    }
+
+    .hero {
+      padding:26px;
+    }
+    .hero h1 { margin:0 0 10px 0; font-size:28px; }
+    .hero p { margin:0 0 16px 0; color:var(--muted); }
+
+    .illustration {
+      width:100%; height:200px; background:linear-gradient(135deg,#dbeafe, #e6fffa);
+      border-radius:8px; display:flex; align-items:center; justify-content:center; color:#0b76ef; font-weight:700;
+      font-size:20px;
+    }
+
+    aside.sidebar .meta { display:flex; flex-direction:column; gap:10px }
+    .meta .item { padding:12px; background:#fff; border-radius:8px; border:1px solid rgba(0,0,0,0.03); }
+
+    /* ---------- Footer ---------- */
+    footer { margin-top:18px; color:var(--muted); font-size:14px; text-align:center; }
+
+    /* ---------- Media queries (responsive rules) ---------- */
+    @media (max-width: 900px){
+      main { grid-template-columns: 1fr 260px; }
+      .hero h1 { font-size:26px; }
+    }
+
+    @media (max-width: 720px){
+      /* Stack layout for smaller screens */
+      header.site-header { align-items:flex-start; gap:12px; }
+      nav.main-nav { display:none; }              /* hide desktop nav */
+      .hamburger { display:inline-flex; }        /* show hamburger */
+      .mobile-nav { display:none; }               /* hidden until toggled */
+
+      main { grid-template-columns: 1fr; }
+      .illustration { height:160px; }
+    }
+
+    /* Display mobile nav when checkbox is checked */
+    @media (max-width: 720px){
+      .nav-toggle:checked ~ .mobile-nav { display:block; }
+    }
+
+    /* Typography scaling for very small screens */
+    @media (max-width: 420px){
+      .hero h1 { font-size:20px; }
+      body { padding:14px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page" role="document">
+    <!-- Header -->
+    <header class="site-header" role="banner">
+      <a href="#" class="brand" aria-label="Site home">
+        <div class="logo" aria-hidden="true">C</div>
+        <div>
+          <div class="title">Cognifyz Demo</div>
+          <div style="font-size:12px; color:var(--muted)">Responsive Design Task</div>
+        </div>
+      </a>
+
+      <!-- Desktop nav (visible on wide screens) -->
+      <nav class="main-nav" role="navigation" aria-label="Primary navigation">
+        <a href="#home">Home</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <!-- Mobile hamburger (checkbox toggle) -->
+      <input class="nav-toggle" id="navToggle" type="checkbox" aria-hidden="false" />
+      <label class="hamburger" for="navToggle" aria-label="Toggle menu" role="button" tabindex="0">
+        <span class="bars" aria-hidden="true"></span>
+      </label>
+
+      <!-- Mobile nav panel (CSS-only show/hide) -->
+      <nav class="mobile-nav" aria-label="Mobile navigation">
+        <a href="#home">Home</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <!-- Main content -->
+    <main>
+      <section class="card hero" id="home" aria-labelledby="home-title">
+        <h1 id="home-title">Responsive webpage with mobile-friendly navigation</h1>
+        <p>
+          This demo converts a basic webpage to responsive layout using CSS media queries. On narrow screens the navigation collapses into a
+          hamburger menu that expands a vertical nav — implemented using a CSS-only checkbox toggle for simplicity and accessibility.
+        </p>
+
+        <div class="illustration" role="img" aria-label="Illustration area">
+          Responsive illustration
+        </div>
+
+        <h3 style="margin-top:18px">Features implemented</h3>
+        <ul>
+          <li>Grid layout that becomes single-column on mobile</li>
+          <li>Typography and image scaling</li>
+          <li>Accessible CSS-only hamburger menu (no JS)</li>
+        </ul>
+      </section>
+
+      <aside class="card sidebar" aria-labelledby="side-title">
+        <h3 id="side-title">Sidebar / Project info</h3>
+        <div class="meta">
+          <div class="item"><strong>Author:</strong> Ojaswi Dwivedi</div>
+          <div class="item"><strong>Frameworks:</strong> Plain CSS (media queries)</div>
+          <div class="item"><strong>Test breakpoints:</strong> &lt;720px mobile, 720–900 tablet, &gt;900 desktop</div>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      &copy; <span id="year"></span> Cognifyz - Level 2 Task 2 • Responsive Design demo
+    </footer>
+  </div>
+
+  <script>
+    // Small JS only to set the footer year and improve keyboard accessibility for checkbox toggle label.
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Optional: allow space/enter on label acting as button for keyboard users
+    const label = document.querySelector('label.hamburger');
+    label.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        document.getElementById('navToggle').checked = !document.getElementById('navToggle').checked;
+      }
+    });
+  </script>
+</body>
+</html>

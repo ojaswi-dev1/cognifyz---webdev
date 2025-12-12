@@ -31,3 +31,8 @@ Responsive grid layout built with Bootstrap
 Converted a webpage into a responsive layout using CSS media queries
 
 Built a mobile-friendly hamburger navigation menu (HTML + CSS)
+
+
+# Technologies Used
+
+HTML, CSS, JavaScript, Bulma, Bootstrap, Media Queries
